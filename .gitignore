@@ -2,8 +2,9 @@ Binaries
 
 Content/*
 !Content/Blueprints
-!Content/Maps
 
+Plugins/*
+!Plugins/AbilityPlugin
 
 DerivedDataCache
 Intermediate
