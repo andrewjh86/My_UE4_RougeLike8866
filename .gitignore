@@ -3,9 +3,6 @@ Binaries
 Content/*
 !Content/Blueprints
 
-Plugins/*
-!Plugins/AbilityPlugin
-
 DerivedDataCache
 Intermediate
 Saved
