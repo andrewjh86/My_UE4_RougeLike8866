@@ -1,7 +1,7 @@
 Binaries
 
 Content/*
-!Content/Blueprints
+!Content/Blueprint
 
 DerivedDataCache
 Intermediate
