@@ -1,7 +1,7 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Violent_MarioCharacter.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
+
+#include "Character/CPPPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -10,9 +10,9 @@
 #include "GameFramework/SpringArmComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
-// AViolent_MarioCharacter
+// ACPPPlayer
 
-AViolent_MarioCharacter::AViolent_MarioCharacter()
+ACPPPlayer::ACPPPlayer()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -50,67 +50,47 @@ AViolent_MarioCharacter::AViolent_MarioCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void AViolent_MarioCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void ACPPPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Space", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Space", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &AViolent_MarioCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &AViolent_MarioCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("MoveForward", this, &ACPPPlayer::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ACPPPlayer::MoveRight);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &AViolent_MarioCharacter::TurnAtRate);
+	PlayerInputComponent->BindAxis("TurnRate", this, &ACPPPlayer::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &AViolent_MarioCharacter::LookUpAtRate);
+	PlayerInputComponent->BindAxis("LookUpRate", this, &ACPPPlayer::LookUpAtRate);
 
-	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &AViolent_MarioCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &AViolent_MarioCharacter::TouchStopped);
 
-	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AViolent_MarioCharacter::OnResetVR);
 }
 
-
-void AViolent_MarioCharacter::OnResetVR()
+void ACPPPlayer::BeginPlay()
 {
-	// If Violent_Mario is added to a project via 'Add Feature' in the Unreal Editor the dependency on HeadMountedDisplay in Violent_Mario.Build.cs is not automatically propagated
-	// and a linker error will result.
-	// You will need to either:
-	//		Add "HeadMountedDisplay" to [YourProject].Build.cs PublicDependencyModuleNames in order to build successfully (appropriate if supporting VR).
-	// or:
-	//		Comment or delete the call to ResetOrientationAndPosition below (appropriate if not supporting VR)
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+	Super::BeginPlay();
+
 }
 
-void AViolent_MarioCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		Jump();
-}
 
-void AViolent_MarioCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		StopJumping();
-}
-
-void AViolent_MarioCharacter::TurnAtRate(float Rate)
+void ACPPPlayer::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AViolent_MarioCharacter::LookUpAtRate(float Rate)
+void ACPPPlayer::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AViolent_MarioCharacter::MoveForward(float Value)
+void ACPPPlayer::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))
 	{
@@ -124,17 +104,18 @@ void AViolent_MarioCharacter::MoveForward(float Value)
 	}
 }
 
-void AViolent_MarioCharacter::MoveRight(float Value)
+void ACPPPlayer::MoveRight(float Value)
 {
-	if ( (Controller != nullptr) && (Value != 0.0f) )
+	if ((Controller != nullptr) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
 }
+
