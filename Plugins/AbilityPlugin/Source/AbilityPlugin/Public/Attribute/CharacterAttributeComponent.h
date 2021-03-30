@@ -22,11 +22,8 @@ class ABILITYPLUGIN_API UCharacterAttributeComponent : public UActorComponent
 public:
 	UCharacterAttributeComponent();
 
-	UPROPERTY(EditAnywhere,Category = "Attributes_Dynamic")
+	UPROPERTY(BlueprintReadWrite,Category = "Attributes_Dynamic")
 		bool bDead = false;
-
-	UPROPERTY(EditAnywhere, Category = "Attributes_Dynamic")
-		bool bStun = false;
 
 	UPROPERTY( BlueprintReadWrite, Category = "Attributes_Dynamic")
 		float Health;
@@ -39,18 +36,18 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes_Static")
-		float BaseHealth;
+		float BaseHealth =100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes_Static")
-		float BaseStamina;
+		float BaseStamina =50.f;
 
 	UFUNCTION()
 		void IntitializeAttributesToBase();
 
 public:
 	//Stats:
-	UPROPERTY(EditAnywhere, Category = "Attributes_Static")
-		float Defense;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes_Static")
+		float Defense=5.f;
 
 
 

@@ -52,10 +52,11 @@ ACPPPlayer::ACPPPlayer()
 
 void ACPPPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-	// Set up gameplay key bindings
+	// Set up gameplay key bindings: E,M,P,R,F,lshift,tab
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Space", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Space", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ABaseCharacter::Attack);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ACPPPlayer::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACPPPlayer::MoveRight);
