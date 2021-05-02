@@ -56,7 +56,7 @@ void ACPPPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputCom
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Space", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Space", IE_Released, this, &ACharacter::StopJumping);
-	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ABaseCharacter::Attack);
+	//PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ABaseCharacter::Attack);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ACPPPlayer::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACPPPlayer::MoveRight);

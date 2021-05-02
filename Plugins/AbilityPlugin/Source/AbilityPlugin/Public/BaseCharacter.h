@@ -17,7 +17,7 @@ class USceneComponent;
 class UCharacterAttributeComponent;
 
 UCLASS()
-class ABILITYPLUGIN_API ABaseCharacter : public ACharacter, public ICharacterInterface
+class ABILITYPLUGIN_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -32,25 +32,25 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Attribute)
 		virtual void DeathHandle();
 
-	void ApplyDamage_Implementation(float NewDamage);
-	void StunCharacter_Implementation(float NewStun);
-	void ApplyForce_Implementation(FVector NewForce);
-	void ApplyAll_Implementation(float NewDamage, float NewStun, FVector NewForce);
+	//void ApplyDamage_Implementation(float NewDamage, UPrimitiveComponent* HitComp);
+	//void StunCharacter_Implementation(float NewStun);
+	//void ApplyForce_Implementation(FVector NewForce);
+	//void ApplyAll_Implementation(float NewDamage, UPrimitiveComponent* HitComp, float NewStun, FVector NewForce);
 
-	//FHealthChange_BP HealthChange_BP;
-	//	FStun_BP Stun_BP;
+	////FHealthChange_BP HealthChange_BP;
+	////	FStun_BP Stun_BP;
+
+	////UFUNCTION(BlueprintImplementableEvent, Category = BPEvent)
+	////	void GetUpdatedHealth_BP(float NewDamage);
 
 	//UFUNCTION(BlueprintImplementableEvent, Category = BPEvent)
-	//	void GetUpdatedHealth_BP(float NewDamage);
+	//	void ApplyForce_BP(FVector NewForce);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = BPEvent)
-		void ApplyForce_BP(FVector NewForce);
+	//UFUNCTION(BlueprintImplementableEvent, Category = BPEvent)
+	//	void StunCharacter_BP(float NewStun);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = BPEvent)
-		void StunCharacter_BP(float NewStun);
-
-	UFUNCTION(BlueprintCallable, Category = Melee)
-		virtual void Attack();
+	//UFUNCTION(BlueprintCallable, Category = Melee)
+	//	virtual void Attack();
 
 
 
@@ -67,7 +67,6 @@ protected:
 		float Damage = 20.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Melee)
 		float Power = 1500.f;
-
 
 
 

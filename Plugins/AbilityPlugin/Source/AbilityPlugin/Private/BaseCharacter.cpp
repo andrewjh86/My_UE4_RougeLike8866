@@ -36,47 +36,47 @@ void ABaseCharacter::DeathHandle() {
 	Destroy();
 }
 
-void ABaseCharacter::ApplyDamage_Implementation(float NewDamage)
-{
-	CharacterAttributeComponent->ApplyDamage(NewDamage);
-}
-
-void ABaseCharacter::StunCharacter_Implementation(float NewStun)
-{
-	StunCharacter_BP(NewStun);
-}
-
-void ABaseCharacter::ApplyForce_Implementation(FVector NewForce)
-{
-	ApplyForce_BP(NewForce);
-	GetCharacterMovement()->Launch(NewForce);
-}
-
-void ABaseCharacter::ApplyAll_Implementation(float NewDamage, float NewStun, FVector NewForce)
-{
-	ApplyDamage_Implementation(NewDamage);
-	StunCharacter_Implementation(NewStun);
-	ApplyForce_Implementation(NewForce);
-}
-
-
-
-void ABaseCharacter::Attack() {
-	FVector SpherePos = GetActorForwardVector() * AttackDistance + GetActorLocation();
-	UKismetSystemLibrary::DrawDebugSphere(GetWorld(), SpherePos, AttackDistance, 16, FLinearColor::Black, 3.f, 1.0f);
-	TArray < TEnumAsByte < EObjectTypeQuery > >ObjectTypes = { UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn) };
-	TArray<AActor*> ActorsToIgnore = {this};
-	TArray <  AActor* > OutActors;
-		UKismetSystemLibrary::SphereOverlapActors(GetWorld(), SpherePos, AttackDistance, ObjectTypes, nullptr, ActorsToIgnore, OutActors);
-
-		for (auto& HitActor : OutActors)
-		{
-			if (ICharacterInterface* CharacterInterface = Cast<ICharacterInterface>(HitActor))
-			{
-
-
-				CharacterInterface->Execute_ApplyAll(HitActor,Damage,1.f,GetActorForwardVector()*Power);
-			}
-		}
-}
+//void ABaseCharacter::ApplyDamage_Implementation(float NewDamage, UPrimitiveComponent* HitComp);
+//{
+//	CharacterAttributeComponent->ApplyDamage(NewDamage);
+//}
+//
+//void ABaseCharacter::StunCharacter_Implementation(float NewStun)
+//{
+//	StunCharacter_BP(NewStun);
+//}
+//
+//void ABaseCharacter::ApplyForce_Implementation(FVector NewForce)
+//{
+//	ApplyForce_BP(NewForce);
+//	GetCharacterMovement()->Launch(NewForce);
+//}
+//
+//void ABaseCharacter::ApplyAll_Implementation(float NewDamage, UPrimitiveComponent* HitComp, float NewStun, FVector NewForce);
+//{
+//	ApplyDamage_Implementation(NewDamage);
+//	StunCharacter_Implementation(NewStun);
+//	ApplyForce_Implementation(NewForce);
+//}
+//
+//
+//
+//void ABaseCharacter::Attack() {
+//	FVector SpherePos = GetActorForwardVector() * AttackDistance + GetActorLocation();
+//	UKismetSystemLibrary::DrawDebugSphere(GetWorld(), SpherePos, AttackDistance, 16, FLinearColor::Black, 3.f, 1.0f);
+//	TArray < TEnumAsByte < EObjectTypeQuery > >ObjectTypes = { UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn) };
+//	TArray<AActor*> ActorsToIgnore = { this };
+//	TArray <  AActor* > OutActors;
+//	UKismetSystemLibrary::SphereOverlapActors(GetWorld(), SpherePos, AttackDistance, ObjectTypes, nullptr, ActorsToIgnore, OutActors);
+//
+//	for (auto& HitActor : OutActors)
+//	{
+//		if (ICharacterInterface* CharacterInterface = Cast<ICharacterInterface>(HitActor))
+//		{
+//
+//
+//			//CharacterInterface->Execute_ApplyAll(HitActor, Damage, 1.f, GetActorForwardVector() * Power);
+//		}
+//	}
+//}
 

@@ -2,9 +2,12 @@
 
 #pragma once
 
+#include "Melee/StatEnum.h"
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "CharacterInterface.generated.h"
+
+class UPrimitiveComponent;
 
 // This class does not need to be modified.
 UINTERFACE(BlueprintType)
@@ -24,8 +27,8 @@ class ABILITYPLUGIN_API ICharacterInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Events")
-		 void ApplyDamage(float NewDamage);
-
+		 void ApplyDamage(float NewDamage, UPrimitiveComponent* HitComp);
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Events")
 		 void StunCharacter(float NewStun);
 
@@ -33,7 +36,8 @@ public:
 		 void ApplyForce(FVector NewForce);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Events")
-		 void ApplyAll(float NewDamage, float NewStun,FVector NewForce);
+		 void ApplyAll(float HitDamage, UPrimitiveComponent* HitComp, float HitStun,FVector HitForce);
+
 
 };
 
